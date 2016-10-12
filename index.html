@@ -14,14 +14,26 @@
     <script>
       var player = 'ericminio';
       
-      var repos = ['learning-javascript', 'sandbox', 'tdd-ready-node', 'search'];
+      var repos = ['learning-javascript', 'sandbox', 'tdd-ready-node', 'search'];      
+      $('#max').text(repos.length);      
+      
       var api = 'https://api.travis-ci.org/repos/' + player + '/';
       var web = 'https://travis-ci.org/' + player + '/';
-      var score = 0;      
+      var calls = [];
+      var contributions = [];
       $.each(repos, function(index, repo) {
         var target = api + repo + '.json';        
-        $.getJSON(target, function(data) {
+        var call = $.getJSON(target, function(data) {
           var contribution = (1-data.last_build_result);
+          contributions[index] = contribution;                    
+        });
+        calls.push(call);
+      });
+      
+      $.when.apply($, calls).done(function() {
+        var score = 0;            
+        $.each(repos, function(index, repo) {
+          var contribution = contributions[index];
           
           var color = contribution == 1 ? 'passed' : 'failed';
           var href = web + repo;
@@ -32,7 +44,6 @@
           $('#score').text(score);
         });
       });
-      $('#max').text(repos.length);      
     </script>
   </body>
 </html>
