@@ -20,10 +20,7 @@
       var api = 'https://api.travis-ci.org/repos/' + player + '/';
       $.each(levels, function(index, repo) {
         var target = api + repo + '.json';        
-        var call = $.getJSON(target, function(data) {
-          var result = (1-data.last_build_result);
-          results[index] = result;                    
-        });
+        var call = $.getJSON(target, function(data) { results[index] = (1-data.last_build_result); });
         calls.push(call);
       });
       
@@ -32,16 +29,15 @@
       $.when.apply($, calls).done(function() {
         var score = 0;            
         $.each(levels, function(index, repo) {
-          var result = results[index];
-          
-          var color = result == 1 ? 'passed' : 'failed';
+          var result = results[index];          
           var href = web + repo;
+          var color = result == 1 ? 'passed' : 'failed';
           var item = '<li class="'+ color +'"><a class="'+ color +'" href="'+ href +'">'+ repo +'</a></li>';
+          
           $('#results').append(item);
-
-          score += contribution;
-          $('#score').text(score);
+          score += result;
         });
+        $('#score').text(score);
       });
     </script>
   </body>
