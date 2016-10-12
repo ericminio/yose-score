@@ -3,7 +3,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
   </head>
   <body>
-    <h1>Score <span id="score"></span> <span id="max"></span></h1>
+    <h1>Score <span id="score"></span>/<span id="max"></span></h1>
     <ul id="results">
     </ul>
     
@@ -18,10 +18,10 @@
           score += (1-data.last_build_result);
           var item = '<li>'+ repo +'</li>';
           $('#results').append(item);
+          $('#score').text(score);
         });
       });
-      $('#max').text(repos.length);
-      $('#score').text(score);
+      $('#max').text(repos.length);      
     </script>
   </body>
 </html>
