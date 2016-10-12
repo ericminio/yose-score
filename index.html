@@ -1,1 +1,18 @@
-<h1>Status</h1>
+<html>
+  <head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  </head>
+  <body>
+    <h1>Status</h1>
+    <div id="results">
+    </div>
+    
+    <script>
+      $( document ).ready(function() {
+        $.getJSON('https://api.travis-ci.org/repos/ericminio/learning-javascript.json', function(data) {
+          $('#results').html(data);
+        });
+      });
+    </script>
+  </body>
+</html>
