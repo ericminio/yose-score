@@ -12,17 +12,19 @@
     </ul>
     
     <script>
-      var repos = ['learning-javascript', 'sandbox', 'tdd-ready-node', 'search'];
-      var base = 'https://api.travis-ci.org/repos/ericminio/';
-      var score = 0;
+      var player = 'ericminio;
       
+      var repos = ['learning-javascript', 'sandbox', 'tdd-ready-node', 'search'];
+      var api = 'https://api.travis-ci.org/repos/' + player + '/';
+      var web = 'https://travis-ci.org/' + player + '/';
+      var score = 0;      
       $.each(repos, function(index, repo) {
-        var target = base + repo + '.json';
-        var href = 'https://travis-ci.org/ericminio/' + repo;
+        var target = api + repo + '.json';        
         $.getJSON(target, function(data) {
           var contribution = (1-data.last_build_result);
           
           var color = contribution == 1 ? 'passed' : 'failed';
+          var href = web + repo;
           var item = '<li class="'+ color +'"><a class="'+ color +'" href="'+ href +'">'+ repo +'</a></li>';
           $('#results').append(item);
 
