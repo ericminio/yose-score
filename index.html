@@ -3,22 +3,25 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
   </head>
   <body>
-    <h1>Status</h1>
+    <h1>Score <span id="score"></span> <span id="max"></span></h1>
     <ul id="results">
     </ul>
     
     <script>
       var repos = ['learning-javascript', 'sandbox', 'tdd-ready-node', 'search'];
       var base = 'https://api.travis-ci.org/repos/ericminio/';
+      var score = 0;
       
       $.each(repos, function(index, repo) {
         var target = base + repo + '.json';
         $.getJSON(target, function(data) {
-          var item = '<li>'+ (1-data.last_build_result) + '&nbsp;' + repo +'</li>';
-          console.log(item);
+          var score += (1-data.last_build_result);
+          var item = '<li>'+ score + '&nbsp;' + repo +'</li>';
           $('#results').append(item);
         });
       });
+      $('max').text(repos.length);
+      $('score').text(score);
     </script>
   </body>
 </html>
