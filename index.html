@@ -8,13 +8,13 @@
     </ul>
     
     <script>
-      var repos = ['learning-javascript', 'sandbox'];
+      var repos = ['learning-javascript', 'sandbox', 'tdd-ready-node', 'search'];
       var base = 'https://api.travis-ci.org/repos/ericminio/';
       
       $.each(repos, function(index, repo) {
         var target = base + repo + '.json';
         $.getJSON(target, function(data) {
-          var item = '<li>'+ data.last_build_result + '&nbsp;' + repo +'</li>';
+          var item = '<li>'+ (1-data.last_build_result) + '&nbsp;' + repo +'</li>';
           console.log(item);
           $('#results').append(item);
         });
