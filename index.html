@@ -1,6 +1,10 @@
 <html>
   <head>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <style>
+      .passed { color: #39aa56; }
+      .failed { color: #db4545; }
+    </style>
   </head>
   <body>
     <h1>Score <span id="score"></span>/<span id="max"></span></h1>
@@ -11,16 +15,14 @@
       var repos = ['learning-javascript', 'sandbox', 'tdd-ready-node', 'search'];
       var base = 'https://api.travis-ci.org/repos/ericminio/';
       var score = 0;
-      var passed = '<svg version="1.1" id="icon-passed" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="-1 -1 17 16" xml:space="preserve"><g><polyline style="stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;" id="passed" points="14.5,1.5 6.499,13.716 0.5,8.78 "></polyline></g></svg>';
-      var failed = '<svg version="1.1" id="icon-failed" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="-1 -1 17 17" xml:space="preserve"><g id="failed"><line x1="0.5" y1="0.5" x2="14.5" y2="14.5"></line><line x1="14.5" y1="0.5" x2="0.5" y2="14.5"></line></g></svg>';
       
       $.each(repos, function(index, repo) {
         var target = base + repo + '.json';
         $.getJSON(target, function(data) {
           var contribution = (1-data.last_build_result);
           
-          var icon = contribution == 1 ? passed : failed;
-          var item = '<li>'+ icon + '&nbsp;' + repo +'</li>';
+          var color = contribution == 1 ? 'passed' : 'failed';
+          var item = '<li class="'+ color +'">'+ icon + '&nbsp;' + repo +'</li>';
           $('#results').append(item);
 
           score += contribution;
