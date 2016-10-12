@@ -10,6 +10,7 @@
     <script>
       $( document ).ready(function() {
         $.getJSON('https://api.travis-ci.org/repos/ericminio/learning-javascript.json', function(data) {
+          console.log(data);
           $('#results').html(data);
         });
       });
