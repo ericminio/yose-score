@@ -4,14 +4,19 @@
   </head>
   <body>
     <h1>Status</h1>
-    <div id="results">
-    </div>
+    <ul id="results">
+    </ul>
     
     <script>
-      $( document ).ready(function() {
-        $.getJSON('https://api.travis-ci.org/repos/ericminio/learning-javascript.json', function(data) {
-          console.log(data);
-          $('#results').text(data.last_build_result);
+      var repos = ['learning-javascript', 'sandbox'];
+      var base = 'https://api.travis-ci.org/repos/ericminio/';
+      
+      $.each(repos, function(index, repo) {
+        var target = base + repo + '.json';
+        $.getJSON(target, function(data) {
+          var item = '<li>'+ data.last_build_result + '&nbsp;' + repo +'</li>';
+          console.log(item);
+          $('#results').append(item);
         });
       });
     </script>
