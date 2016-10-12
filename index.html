@@ -12,16 +12,15 @@
     </ul>
     
     <script>
-      var player = 'ericminio';
+      var player = 'ericminio';      
+      var levels = ['learning-javascript', 'sandbox', 'tdd-ready-node', 'search']; 
       
-      var repos = ['learning-javascript', 'sandbox', 'tdd-ready-node', 'search'];      
-      $('#max').text(repos.length);      
+      var contributions = [];
+      var calls = [];
       
       var api = 'https://api.travis-ci.org/repos/' + player + '/';
       var web = 'https://travis-ci.org/' + player + '/';
-      var calls = [];
-      var contributions = [];
-      $.each(repos, function(index, repo) {
+      $.each(levels, function(index, repo) {
         var target = api + repo + '.json';        
         var call = $.getJSON(target, function(data) {
           var contribution = (1-data.last_build_result);
@@ -32,7 +31,8 @@
       
       $.when.apply($, calls).done(function() {
         var score = 0;            
-        $.each(repos, function(index, repo) {
+        $('#max').text(levels.length);          
+        $.each(levels, function(index, repo) {
           var contribution = contributions[index];
           
           var color = contribution == 1 ? 'passed' : 'failed';
