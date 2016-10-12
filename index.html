@@ -16,12 +16,12 @@
         var target = base + repo + '.json';
         $.getJSON(target, function(data) {
           score += (1-data.last_build_result);
-          var item = '<li>'+ score + '&nbsp;' + repo +'</li>';
+          var item = '<li>'+ repo +'</li>';
           $('#results').append(item);
         });
       });
-      $('max').text(repos.length);
-      $('score').text(score);
+      $('#max').text(repos.length);
+      $('#score').text(score);
     </script>
   </body>
 </html>
