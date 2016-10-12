@@ -7,35 +7,34 @@
     </style>
   </head>
   <body>
-    <h1>Score <span id="score"></span>/<span id="max"></span></h1>
+    <h1>Score <span id="score">0</span>/<span id="max-score"></span></h1>
     <ul id="results">
     </ul>
     
     <script>
       var player = 'ericminio';      
-      var levels = ['learning-javascript', 'sandbox', 'tdd-ready-node', 'search']; 
-      
-      var contributions = [];
+      var levels = ['learning-javascript', 'sandbox', 'tdd-ready-node', 'search'];       
+      var results = [];
       var calls = [];
       
       var api = 'https://api.travis-ci.org/repos/' + player + '/';
-      var web = 'https://travis-ci.org/' + player + '/';
       $.each(levels, function(index, repo) {
         var target = api + repo + '.json';        
         var call = $.getJSON(target, function(data) {
-          var contribution = (1-data.last_build_result);
-          contributions[index] = contribution;                    
+          var result = (1-data.last_build_result);
+          results[index] = result;                    
         });
         calls.push(call);
       });
       
+      var web = 'https://travis-ci.org/' + player + '/';
+      $('#max-score').text(levels.length);          
       $.when.apply($, calls).done(function() {
         var score = 0;            
-        $('#max').text(levels.length);          
         $.each(levels, function(index, repo) {
-          var contribution = contributions[index];
+          var result = results[index];
           
-          var color = contribution == 1 ? 'passed' : 'failed';
+          var color = result == 1 ? 'passed' : 'failed';
           var href = web + repo;
           var item = '<li class="'+ color +'"><a class="'+ color +'" href="'+ href +'">'+ repo +'</a></li>';
           $('#results').append(item);
