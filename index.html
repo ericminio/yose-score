@@ -15,7 +15,7 @@
       $.each(repos, function(index, repo) {
         var target = base + repo + '.json';
         $.getJSON(target, function(data) {
-          var score += (1-data.last_build_result);
+          score += (1-data.last_build_result);
           var item = '<li>'+ score + '&nbsp;' + repo +'</li>';
           $('#results').append(item);
         });
