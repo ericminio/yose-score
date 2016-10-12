@@ -22,7 +22,7 @@
           var contribution = (1-data.last_build_result);
           
           var color = contribution == 1 ? 'passed' : 'failed';
-          var item = '<li class="'+ color +'">'+ icon + '&nbsp;' + repo +'</li>';
+          var item = '<li class="'+ color +'">'+ repo +'</li>';
           $('#results').append(item);
 
           score += contribution;
